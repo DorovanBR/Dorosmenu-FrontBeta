@@ -1,0 +1,60 @@
+{
+    "categoria" : {
+        "codigo": "int primary_key auto_increment",
+        "descricao": "text",
+        "data_cadastro": "date",
+        "horario_cadastro": "time",
+        "data_atualizacao": "date",
+        "horario_atualizacao": "time",
+        "cod_situacao": "int"
+    },
+    "produtos" : {
+        "codigo": "int primary_key auto_increment",
+        "nome": "text",
+        "descricao": "text",
+        "cod_categoria": "int",
+        "data_cadastro": "date",
+        "horario_cadastro": "time",
+        "data_atualizacao": "date",
+        "horario_atualizacao": "time",
+        "cod_situacao": "int"
+    },
+    "estoque" : {
+        "codigo": "int primary_key auto_increment",
+        "cod_produto": "int",
+        "quantidade": "int",
+        "valor_compra": "float", 
+        "valor_venda": "float", 
+        "data_cadastro": "date",
+        "horario_cadastro": "time",
+        "data_atualizacao": "date",
+        "horario_atualizacao": "time",
+        "cod_situacao": "int"
+    },
+    "pedidos" : {
+        "codigo": "int primary_key auto_increment",
+        "mesa": "int",
+        "valor_total": "float", 
+        "valor_pago": "float", 
+        "valor_troco": "float", 
+        "data_cadastro": "date",
+        "horario_cadastro": "time",
+        "data_atualizacao": "date",
+        "horario_atualizacao": "time",
+        "cod_status": "int",
+        "cod_situacao": "int"
+    },
+    "pedidos_produtos":{
+        "codigo": "int primary_key auto_increment",
+        "cod_pedido": "int",
+        "cod_produto": "int",
+        "quantidade": "int",
+        "valor_venda": "float", 
+        "data_cadastro": "date",
+        "horario_cadastro": "time",
+        "data_atualizacao": "date",
+        "horario_atualizacao": "time",
+        "cod_status": "int",
+        "cod_situacao": "int"
+    }
+}

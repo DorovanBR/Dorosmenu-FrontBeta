@@ -1,0 +1,6 @@
+1 - Cadastro de Categorias
+2 - Cadastrar Produtos para as Categorias
+3 - Cadastrar Estoque para os Produtos
+5 - Ao Criar um novo pedido, o mesmo deverá ser associado á uma mesa.
+6 - Realizar a Inserção dos Produtos no Pedido dando baixa no Estoque.
+7 - Altetração de Status do Pedido conforme a Alteração dos Status dos Produtos.
