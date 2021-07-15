@@ -96,15 +96,20 @@
 
                 PesquisaRegistroBD(bancoDados, "Estoque").then((data)=>{
                     for(var i in data){
-                        var registro = data[i];
+                        // Define as Variaveis
+                            var registro = data[i];
+                            var cod_situacao = registro.hasOwnProperty("cod_situacao") ? registro.cod_situacao : "-";
 
-                        selectProduto.append($('<option>', {
-                            value: registro.codigo,
-                            text: registro.produto,
-                            "data-valor-compra": registro.valor_compra,
-                            "data-valor-venda": registro.valor_venda,
-                            "data-quantidade": registro.quantidade,
-                        }));
+                        // Verifica se o registro está com a flag de Cadastrado
+                            if(parseInt(cod_situacao) == 1){
+                                selectProduto.append($('<option>', {
+                                    value: registro.codigo,
+                                    text: registro.produto,
+                                    "data-valor-compra": registro.valor_compra,
+                                    "data-valor-venda": registro.valor_venda,
+                                    "data-quantidade": registro.quantidade,
+                                }));
+                            }
                     }
                     if(parametros.hasOwnProperty("cod_produto")){
                         selectProduto.val(parametros.cod_produto);
@@ -872,6 +877,9 @@ jQuery(document).ready(($)=>{
                                                         $("button[name='button-adicionar-produto']").attr("data-total-produtos", 0);
                                                     // Consultar todos os Registros no Banco de Dados
                                                         ConsultaRegistrosPedido();
+                                                    // Troca o Botão Alterar pelo Cadastrar
+                                                        $("button[name='button-crud'][data-funcao='alterar']").hide();
+                                                        $("button[name='button-crud'][data-funcao='cadastrar']").show();
                                                 })
                                             });
                                     }

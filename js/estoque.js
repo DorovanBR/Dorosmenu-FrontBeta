@@ -97,12 +97,17 @@
 
                 PesquisaRegistroBD(bancoDados, "Produtos").then((data)=>{
                     for(var i in data){
-                        var registro = data[i];
+                        // Define as Variaveis
+                            var registro = data[i];
+                            var cod_situacao = registro.hasOwnProperty("cod_situacao") ? registro.cod_situacao : "-";
 
-                        selectProduto.append($('<option>', {
-                            value: registro.codigo,
-                            text: registro.nome
-                        }));
+                        // Verifica se o registro está com a flag de Cadastrado
+                            if(parseInt(cod_situacao) == 1){
+                                selectProduto.append($('<option>', {
+                                    value: registro.codigo,
+                                    text: registro.nome
+                                }));
+                            }
                     }
                 })
         }

@@ -343,10 +343,25 @@
 
 											<div class="col">
 												<div class="card">
-													<div class="card-body">
-														<h5 class="card-title mb-4">Realizados</h5>
-														<h1 class="mt-1 mb-3">35</h1>
-														<div class="mb-1">
+													<div class="card-body text-dark bg-light">
+														<h5 class="card-title mb-3">
+															<div class="row">
+																<div class="col-12 text-center">
+																	<i class='far fa-check-circle fa-4x'></i>
+																</div>
+																<div class="col-12 text-center mt-3">
+																	Pedidos Realizados
+																</div>
+															</div>
+														</h5>
+														<h1 class="mb-3">
+															<div class="row">
+																<div class="col-12 text-center" id="div-card-status-1">
+																	35
+																</div>
+															</div>
+														</h1>
+														<div class="mb-1 text-center">
 															<!-- <span class="text-danger"> <i class="mdi mdi-arrow-bottom-right"></i> </span> -->
 															<span class="text-muted">Pedidos realizados aguardando preparo</span>
 														</div>
@@ -357,9 +372,24 @@
 											<div class="col">
 												<div class="card text-white bg-primary">
 													<div class="card-body">
-														<h5 class="card-title mb-4 text-white">Em Preparo</h5>
-														<h1 class="mt-1 mb-3 text-white">30</h1>
-														<div class="mb-1 text-white">
+														<h5 class="card-title mb-3 text-white">
+															<div class="row">
+																<div class="col-12 text-center">
+																	<i class='fas fa-pizza-slice fa-4x'></i>
+																</div>
+																<div class="col-12 text-center mt-3">
+																	Pedidos Em Preparo
+																</div>
+															</div>
+														</h5>
+														<h1 class="mb-3 text-white">
+															<div class="row">
+																<div class="col-12 text-center" id="div-card-status-2">
+																	35
+																</div>
+															</div>
+														</h1>
+														<div class="mb-1 text-white text-center">
 															<!-- <span class="text-success text-white"> <i class="mdi mdi-arrow-bottom-right"></i> 5.25% </span> -->
 															<span class="text-white">Pedidos que estão sendo preparados</span>
 														</div>
@@ -368,11 +398,26 @@
 											</div>
 
 											<div class="col">
-												<div class="card text-white bg-warning">
+												<div class="card text-white bg-danger">
 													<div class="card-body">
-														<h5 class="card-title mb-4 text-white">Aguardando Atendente</h5>
-														<h1 class="mt-1 mb-3 text-white">15</h1>
-														<div class="mb-1 text-white">
+														<h5 class="card-title mb-3 text-white">
+															<div class="row">
+																<div class="col-12 text-center">
+																	<i class='fas fa-user-tie fa-4x'></i>
+																</div>
+																<div class="col-12 text-center mt-3">
+																	Pedidos Aguardando Atendente
+																</div>
+															</div>
+														</h5>
+														<h1 class="mb-3 text-white">
+															<div class="row">
+																<div class="col-12 text-center" id="div-card-status-3">
+																	35
+																</div>
+															</div>
+														</h1>
+														<div class="mb-1 text-white text-center">
 															<!-- <span class="text-success text-white"> <i class="mdi mdi-arrow-bottom-right"></i> 6.65% </span> -->
 															<span class="text-white">Pedidos que estão prontos aguardando o atendente</span>
 														</div>
@@ -383,9 +428,24 @@
 											<div class="col">
 												<div class="card text-white bg-success">
 													<div class="card-body">
-														<h5 class="card-title mb-4 text-white">Finalizado</h5>
-														<h1 class="mt-1 mb-3 text-white">30</h1>
-														<div class="mb-1 text-white">
+														<h5 class="card-title mb-3 text-white">
+															<div class="row">
+																<div class="col-12 text-center">
+																	<i class='fas fa-thumbs-up fa-4x'></i>
+																</div>
+																<div class="col-12 text-center mt-3">
+																	Pedidos Finalizados
+																</div>
+															</div>
+														</h5>
+														<h1 class="mb-3 text-white">
+															<div class="row">
+																<div class="col-12 text-center" id="div-card-status-4">
+																	35
+																</div>
+															</div>
+														</h1>
+														<div class="mb-1 text-white text-center">
 															<!-- <span class="text-danger text-white"> <i class="mdi mdi-arrow-bottom-right"></i> -2.25% </span> -->
 															<span class="text-white">Pedidos que ja foram Entregues e Concluidos</span>
 														</div>
@@ -402,6 +462,149 @@
 											</div>
 											<div class="col-12">
 												<div class="row" id="div-cards-pedidos">
+												</div>
+											</div>
+											<div class="col-12">
+												<div class="modal fade" id="modal-informacao-pedido" tabindex="-1" aria-hidden="true" style="display: none;">
+													<div class="modal-dialog modal-dialog-centered" role="document">
+														<div class="modal-content">
+															<div class="modal-header">
+																<h5 class="modal-title">Informações do Pedido</h5>
+																<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+																	<span aria-hidden="true">×</span>
+																</button>
+															</div>
+															<div class="modal-body">
+																<div class="card">
+																	<div class="card-body">
+									
+																		<div class="row">
+																			<div class="col-md-4">
+																				<div class="text-muted">Nº do Pedido</div>
+																				<strong id="strong-pedido"></strong>
+																			</div>
+																			<div class="col-md-4 text-md-center">
+																				<div class="text-muted">Status</div>
+																				<strong id="strong-status"></strong>
+																			</div>
+																			<div class="col-md-4 text-md-right">
+																				<div class="text-muted">Nº da Mesa</div>
+																				<strong id="strong-mesa"></strong>
+																			</div>
+																		</div>
+									
+																		<hr class="my-4">
+									
+																		<div class="row">
+																			<div class="col-md-6">
+																				<div class="text-muted">Lançado Em</div>
+																				<strong id="strong-data-horario-cadastro"></strong>
+																			</div>
+																			<div class="col-md-6 text-md-right">
+																				<div class="text-muted">Ultima Atualização</div>
+																				<strong id="strong-data-horario-atualizacao"></strong>
+																			</div>
+																		</div>
+									
+																		<hr class="my-4">
+									
+																		<table class="table table-sm" id="table-pedido-produto">
+																			<thead>
+																				<tr>
+																					<th>Descrição</th>
+																					<th>Quantidade</th>
+																					<th class="text-right">Valor (R$)</th>
+																				</tr>
+																			</thead>
+																			<tbody id="table-pedido-produto-registros">
+																			</tbody>
+																		</table>
+																	</div>
+																</div>
+															</div>
+															<div class="modal-footer">
+																<button type="button" class="btn btn-secondary" id="button-fecha-modal-informacao" data-dismiss="modal">Fechar</button>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="col-12">
+												<div class="modal fade" id="modal-alterar-status-pedido" tabindex="-1" aria-hidden="true" style="display: none;">
+													<div class="modal-dialog modal-dialog-centered" role="document">
+														<div class="modal-content">
+															<div class="modal-header">
+																<h5 class="modal-title"><strong>Selecione o Status Atual do Pedido</strong></h5>
+																<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+																	<span aria-hidden="true">×</span>
+																</button>
+															</div>
+															<div class="modal-body">
+																<div class="card m-0">
+																	<div class="card-body">
+									
+																		<div class="row">
+																			<div class="col-6">
+																				<button type="button" class="btn btn-light w-100" name="button-alterar-status" id="button-alterar-status" data-alterar-status="1" data-status="Pedido Realizado" data-registro-dados="">
+																					<div class="row">
+																						<div class="col-12">
+																							<i class='far fa-check-circle fa-6x'></i>
+																						</div>
+																						<div class="col-12 mt-3">
+																							Pedido Realizado
+																						</div>
+																					</div>
+																				</button>
+																			</div>
+																			<div class="col-6">
+																				<button type="button" class="btn btn-primary w-100" name="button-alterar-status" id="button-alterar-status" data-alterar-status="2" data-status="Pedido Em Andamento" data-registro-dados="">
+																					<div class="row">
+																						<div class="col-12">
+																							<i class='fas fa-pizza-slice fa-6x'></i>
+																						</div>
+																						<div class="col-12 mt-3">
+																							Em Preparo
+																						</div>
+																					</div>
+																				</button>
+																			</div>
+																		</div>
+
+																		<div class="row mt-4">
+																			<div class="col-6">
+																				<button type="button" class="btn btn-danger w-100" name="button-alterar-status" id="button-alterar-status" data-alterar-status="3" data-status="Pedido Aguardando Atendente" data-registro-dados="">
+																					<div class="row">
+																						<div class="col-12">
+																							<i class='fas fa-user-tie fa-6x'></i>
+																						</div>
+																						<div class="col-12 mt-3">
+																							Aguardando Atendente
+																						</div>
+																					</div>
+																				</button>
+																			</div>
+																			<div class="col-6">
+																				<button type="button" class="btn btn-success w-100" name="button-alterar-status" id="button-alterar-status" data-alterar-status="4" data-status="Pedido Finalizado" data-registro-dados="">
+																					<div class="row">
+																						<div class="col-12">
+																							<i class='fas fa-thumbs-up fa-6x'></i>
+																						</div>
+																						<div class="col-12 mt-3">
+																							Finalizado
+																						</div>
+																					</div>
+																				</button>
+																			</div>
+																		</div>
+
+																	</div>
+																</div>
+															</div>
+															<div class="modal-footer">
+																<button type="button" class="btn btn-secondary" id="button-fecha-modal-status" data-dismiss="modal">Fechar</button>
+															</div>
+														</div>
+													</div>
 												</div>
 											</div>
 										</div>
