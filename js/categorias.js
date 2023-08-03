@@ -14,9 +14,29 @@
 
                 TabelaRegistrosCategoria.html("");
 
+            // Carrega a Paginação
+
+                var cachePaginacao = JSON.parse(localStorage.getItem("CategoriasPaginacao"));
+				if(cachePaginacao == null){
+					PaginaRegistro = 0;
+				} else if(cachePaginacao.hasOwnProperty("paginaAtual")){
+					if(cachePaginacao.paginaAtual > 0){
+						PaginaRegistro = (cachePaginacao.paginaAtual * cachePaginacao.registrosPorPagina) - cachePaginacao.registrosPorPagina;
+					} else {
+						PaginaRegistro = 0;
+					}
+				}
+
+                var paginacao = {
+                    paginaAtual: cachePaginacao.paginaAtual,
+                    registrosPorPagina: cachePaginacao.registrosPorPagina
+                }
+
+                var ordenacao = "asc"
+
             // Pesquisar os Registros no banco de dados
 
-                PesquisaRegistroBD(bancoDados, "Categorias").then((data)=>{
+                PesquisaRegistroBD(bancoDados, "Categorias", 0, "asc", paginacao).then((data)=>{
                     
                     // Define as Variaveis
                         
@@ -63,8 +83,18 @@
                             $("#table-categoria").hide();
                             $("#div-alerta-categoria").show();
                         }
-                    
 
+                    // Grava as Informações e gera a estrutura da Paginação
+                        
+                        TotalRegistrosTabela(bancoDados, "Categorias").then((data2)=>{
+							cachePaginacao.totalRegistros = data2;
+							cachePaginacao.registrosPagina = data.length;
+
+                            localStorage.setItem("CategoriasPaginacao", JSON.stringify(cachePaginacao));
+                            
+                            geraEstruturaPaginacao("#pgn-categorias", "CategoriasPaginacao");
+                        })                        
+                        
                 })
         }
 
@@ -136,6 +166,30 @@
                 }
 
         }
+
+    // Função para Geração do Cache
+
+        function geraCache(){
+
+            // Declara as Variaveis de Cache
+
+                var CategoriasPaginacao = {
+                    paginaAtual : 1,
+                    totalPaginas : 1,
+                    registrosPorPagina : 5,
+                    registrosPagina : 0,
+                    totalRegistros : 0
+                }
+
+                var Categorias = {};
+
+            // Grava no localStorage
+
+                localStorage.setItem("CategoriasPaginacao", JSON.stringify(CategoriasPaginacao));
+                localStorage.setItem("Categorias", JSON.stringify(Categorias));
+        }
+
+        geraCache();
 
 //------------------------------------
 // Processos com jQuery
@@ -340,6 +394,19 @@
                             break;
                     }
 
+            })
+
+        // Controla a paginação
+
+            $(document).on('click', "#btn-pgn-categorias", (evento)=>{
+    
+                // Chama a função para troca de paginas
+    
+                    trocaPagina(evento.currentTarget, "CategoriasPaginacao");
+    
+                // Carrega os registros
+            
+                    ConsultaRegistrosCategoria();
             })
 
     })

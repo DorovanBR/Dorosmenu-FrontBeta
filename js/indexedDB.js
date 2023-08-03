@@ -145,7 +145,7 @@
 
     // Função para Pesquisa no Banco de Dados por Código
         
-        function PesquisaRegistroBD(bd, tabela, codigo = 0){
+        function PesquisaRegistroBD(bd, tabela, codigo = 0, ordenacao = "asc", paginacao = {}){
             return new Promise((resolve, reject)=>{
                 if(typeof bd != "object"){
                     reject(console.error("O Objeto bd é inválido ou não existente"));
@@ -158,15 +158,41 @@
                 if(typeof codigo != "number"){
                     reject(console.error("O Codigo do Registro da Tabela é inválido ou não existente"));
                 }
-
+                
+                var objBDStore = bd.result.transaction(tabela).objectStore(tabela);
+                
                 if(codigo <= 0){
-                    bd.result.transaction(tabela).objectStore(tabela).getAll().onsuccess = (evento)=>{
-                        resolve(evento.target.result);
-                    };
+                    var objBDCursor = objBDStore.index("codigo").openCursor(null, ordenacao == "asc" ? "next" : "prev");
                 } else {
-                    bd.result.transaction(tabela).objectStore(tabela).get(codigo).onsuccess = (evento)=>{
-                        resolve(evento.target.result);
-                    };
+                    var objBDCursor = objBDStore.index("codigo").openCursor(codigo, ordenacao == "asc" ? "next" : "prev");
+                }
+
+                var data = [];
+
+                if(Object.keys(paginacao) <= 0){
+                    objBDCursor.onsuccess = (evento)=>{
+                        var cursor = evento.target.result;
+                        if(cursor){
+                            data.push(cursor.value);
+                            cursor.continue();
+                        } else {
+                            resolve(data);
+                        }
+                    }
+                } else {
+                    var count = 0;
+                    objBDCursor.onsuccess = (evento)=>{
+                        var cursor = evento.target.result;
+                        if(cursor){
+                            if(count >= (paginacao.paginaAtual-1) * paginacao.registrosPorPagina && count < paginacao.paginaAtual * paginacao.registrosPorPagina){
+                                data.push(cursor.value);
+                            }
+                            cursor.continue();
+                            count++;
+                        } else {
+                            resolve(data);
+                        }
+                    }
                 }
 
             })
@@ -192,12 +218,12 @@
                     reject(console.error("O objeto valor é inválido ou não existente"));
                 }
 
-                if(typeof paginacao != "object"){
-                    reject(console.error("O objeto paginacao é inválido ou não existente"));
-                }
-
                 if(typeof ordenacao != "string"){
                     reject(console.error("A ordenacao é inválida ou não existente"));
+                }
+
+                if(typeof paginacao != "object"){
+                    reject(console.error("O objeto paginacao é inválido ou não existente"));
                 }
 
                 var objBDStore = bd.result.transaction(tabela).objectStore(tabela);
@@ -219,7 +245,7 @@
                     objBDCursor.onsuccess = (evento)=>{
                         var cursor = evento.target.result;
                         if(cursor){
-                            if(count >= (paginacao.paginaAtual-1) * paginacao.registrosPagina && count < paginacao.paginaAtual * paginacao.registrosPagina){
+                            if(count >= (paginacao.paginaAtual-1) * paginacao.registrosPorPagina && count < paginacao.paginaAtual * paginacao.registrosPorPagina){
                                 data.push(cursor.value);
                             }
                             cursor.continue();
@@ -230,6 +256,27 @@
                     }
                 }
 
+            })
+        }
+
+    // Função para Pesquisa no Banco de Dados por Código
+        
+        function TotalRegistrosTabela(bd, tabela){
+            return new Promise((resolve, reject)=>{
+                if(typeof bd != "object"){
+                    reject(console.error("O Objeto bd é inválido ou não existente"));
+                }
+
+                if(typeof tabela != "string"){
+                    reject(console.error("O Nome da Tabela é inválido ou não existente"));
+                }
+                
+                var objBDStore = bd.result.transaction(tabela).objectStore(tabela);
+                var objBDCursor = objBDStore.getAll();
+
+                objBDCursor.onsuccess = (evento)=>{
+                    resolve(evento.target.result.length);
+                }
             })
         }
 
