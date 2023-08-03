@@ -143,7 +143,7 @@
             })
         }
 
-    // Função para Pesquisa no Banco de Dados
+    // Função para Pesquisa no Banco de Dados por Código
         
         function PesquisaRegistroBD(bd, tabela, codigo = 0){
             return new Promise((resolve, reject)=>{
@@ -167,6 +167,51 @@
                     bd.result.transaction(tabela).objectStore(tabela).get(codigo).onsuccess = (evento)=>{
                         resolve(evento.target.result);
                     };
+                }
+
+            })
+        }
+
+    // Função para Pesquisa no Banco de Dados com LIKE, Ordenação e Paginação
+        
+        function PesquisaRegistroBDIndex(bd, tabela, index, valor, ordenacao = "asc", paginacao = {}){
+            return new Promise((resolve, reject)=>{
+                if(typeof bd != "object"){
+                    reject(console.error("O Objeto bd é inválido ou não existente"));
+                }
+
+                if(typeof tabela != "string"){
+                    reject(console.error("O Nome da Tabela é inválido ou não existente"));
+                }
+
+                if(typeof index != "object"){
+                    reject(console.error("O objeto index é inválido ou não existente"));
+                }
+
+                if(typeof valor != "string"){
+                    reject(console.error("O objeto valor é inválido ou não existente"));
+                }
+
+                if(typeof paginacao != "object"){
+                    reject(console.error("O objeto paginacao é inválido ou não existente"));
+                }
+
+                if(typeof ordenacao != "string"){
+                    reject(console.error("A ordenacao é inválida ou não existente"));
+                }
+
+                var objBDStore = bd.result.transaction(tabela).objectStore(tabela);
+                var objBDCursor = objBDStore.index(index).openCursor(IDBKeyRange.bound(valor, valor+"\uffff"), ordenacao == "asc" ? "next" : "prev");
+                var data = [];
+
+                objBDCursor.onsuccess = (evento)=>{
+                    var cursor = evento.target.result;
+                    if(cursor){
+                        data.push(cursor.value);
+                        cursor.continue();
+                    } else {
+                        resolve(data);
+                    }
                 }
 
             })
