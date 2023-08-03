@@ -15,6 +15,12 @@
                     opcoes: {
                         unique: true
                     }
+                },{
+                    nome: "descricao",
+                    campo: "descrica",
+                    opcoes: {
+                        unique: false
+                    }
                 }]
             },{
                 nome: "Produtos",
