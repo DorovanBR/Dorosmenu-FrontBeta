@@ -248,10 +248,12 @@
                             if(count >= (paginacao.paginaAtual-1) * paginacao.registrosPorPagina && count < paginacao.paginaAtual * paginacao.registrosPorPagina){
                                 if(cursor.value[index].includes(valor)){
                                     data.push(cursor.value);
+                                    count++;
                                 }
+                            } else {
+                                count++;
                             }
                             cursor.continue();
-                            count++;
                         } else {
                             resolve(data);
                         }
@@ -289,8 +291,8 @@
                         if(cursor){
                             if(cursor.value[pesquisa.index].includes(pesquisa.valor)){
                                 data.push(cursor.value);
-                                cursor.continue();
                             }
+                            cursor.continue();
                         } else {
                             resolve(data.length);
                         }
